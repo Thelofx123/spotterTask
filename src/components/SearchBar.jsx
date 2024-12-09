@@ -134,7 +134,7 @@ const SearchBar = ({ sidebar = false }) => {
   return (
     <div
       className={`${
-        sidebar ? "w-full" : "lg:w-full 2xl:w-[70%]"
+        sidebar ? "w-full" : "w-full lg:w-[80%] 2xl:w-[70%]"
       }  relative  bg-[#202125] pt-[8px] px-[16px] pb-[48px] rounded-lg border-b-[1px] border-[#555] shadow-2xl lg:shadow-xl`}
     >
       {errorMessage && (
