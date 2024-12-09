@@ -138,7 +138,7 @@ const DatePicker = ({
 
   return (
     <div
-      className="relative bg-[#3A3B3F] border-[1px] w-full rounded-md border-[#555]"
+      className="relative bg-[#3A3B3F] z-[100] border-[1px] w-full rounded-md border-[#555]"
       ref={datePickerRef}
     >
       <div
