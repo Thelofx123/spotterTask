@@ -121,7 +121,7 @@ const InputWithDropdown = ({
         </div>
       </div>
       {isDropdownVisible && (
-        <div className="w-full z-[20] absolute bg-[#555] max-h-[500px] overflow-scroll rounded-lg">
+        <div className="w-full z-[300] absolute bg-[#555] max-h-[500px] overflow-scroll rounded-lg">
           {Object.keys(groupedData).map((country) => (
             <div key={country} className="dropdown-country">
               {Object.keys(groupedData[country]).map((city) => (
