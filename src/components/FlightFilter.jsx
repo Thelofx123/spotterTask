@@ -3,19 +3,13 @@ import { minutesToHoursAndMinutes } from "../utility/helper";
 import { Slider } from "./Slider";
 import { filterData } from "../data/filterData";
 
-const FlightFilter = ({ flights, setFilteredFlights, setIsVisibleFilter }) => {
-  const [filters, setFilters] = useState({
-    isCancellationAllowed: false,
-    isChangeAllowed: false,
-    isPartiallyChangeable: false,
-    isPartiallyRefundable: false,
-    isProtectedSelfTransfer: false,
-    isSelfTransfer: false,
-    durationInMinutes: [0, 2000],
-    stopCount: [0, 2],
-    priceRange: [0, 5000],
-  });
-
+const FlightFilter = ({
+  flights,
+  setFilteredFlights,
+  setIsVisibleFilter,
+  setFilters,
+  filters,
+}) => {
   const handleToggle = (filter) => {
     setFilters((prev) => ({
       ...prev,

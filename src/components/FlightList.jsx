@@ -15,6 +15,18 @@ const FlightList = ({ itineraries, data }) => {
   const [filteredFlights, setFilteredFlights] = useState(itineraries);
   const [isVisibleFilter, setIsVisibleFilter] = useState(false);
 
+  const [filters, setFilters] = useState({
+    isCancellationAllowed: false,
+    isChangeAllowed: false,
+    isPartiallyChangeable: false,
+    isPartiallyRefundable: false,
+    isProtectedSelfTransfer: false,
+    isSelfTransfer: false,
+    durationInMinutes: [0, 2000],
+    stopCount: [0, 2],
+    priceRange: [0, 5000],
+  });
+
   return (
     <div className=" relative h-screen overflow-scroll scrollbar-hide ">
       <SearchBar sidebar={true} />
@@ -36,6 +48,8 @@ const FlightList = ({ itineraries, data }) => {
               flights={itineraries}
               setFilteredFlights={setFilteredFlights}
               setIsVisibleFilter={setIsVisibleFilter}
+              filters={filters}
+              setFilters={setFilters}
             />
           </div>
         )}

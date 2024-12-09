@@ -23,9 +23,7 @@ const FlightCard = ({ flight, setSetBarDetail, setSelectedFlightCard }) => {
         <h3>{leg?.destination?.city}</h3>
         <div className="flight-details-mini">
           <p className="text-[14px] text-[#f0f0f0]">
-            {leg.stopCount === 0
-              ? "Non-stop"
-              : `${leg?.stopCount} stop(s) - ${durationHours}h ${durationMinutes}m`}
+            {`${leg?.stopCount} stop(s) - ${durationHours}h ${durationMinutes}m`}
           </p>
         </div>
         <div className="w-full flex justify-end">
