@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchData } from "../utility/fetcher";
-import InputWithDropdown from "./Input";
-import useUser from "../hooks/useUser";
-import useFlight from "../hooks/useFlight";
-import DatePicker from "./DatePicker";
 import { useMobile } from "../hooks/useMobile";
 import { useNavigate } from "react-router-dom";
+import useFlight from "../hooks/useFlight";
+import InputWithDropdown from "./Input";
+import useUser from "../hooks/useUser";
+import DatePicker from "./DatePicker";
 
 const SearchBar = ({ sidebar = false }) => {
   const { saveFlightData, flightParams } = useFlight();

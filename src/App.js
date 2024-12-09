@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
-
-import "./App.css";
-import Header from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Flights from "./pages/Flights";
 import FlightsProvider from "./context/FlightsContext";
+import Header from "./components/Navbar";
+import Flights from "./pages/Flights";
+import Home from "./pages/Home";
+import React from "react";
+import "./App.css";
 
 function App() {
   return (
     <FlightsProvider>
       <div className="app">
         <Header />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/flights" element={<Flights />} />
-          </Routes>
-        </Router>
+        <div className="pt-[44px]">
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/flights" element={<Flights />} />
+            </Routes>
+          </Router>
+        </div>
       </div>
     </FlightsProvider>
   );

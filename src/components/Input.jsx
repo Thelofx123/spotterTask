@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../style/inputStyle.css";
 import { fetchData } from "../utility/fetcher";
 import { debounce } from "../utility/helper";
+import "../style/inputStyle.css";
 
 const InputWithDropdown = ({
   inputValue,
@@ -99,25 +99,29 @@ const InputWithDropdown = ({
     <div
       className={` ${
         sidebar ? "w-full" : "w-full lg:w-[282px]"
-      } border-[1px] relative border-[#555] rounded-md  bg-[#3A3B3F]`}
+      } border-[1px] relative border-[#555] rounded-md  bg-[#202125]`}
       ref={dropdownRef}
     >
-      <input
-        type="text"
-        className="styled-input"
-        value={loading ? "Loading..." : inputValue}
-        placeholder={placeholder}
-        disabled={loading}
-        onFocus={() => setDropdownVisible(true)}
-        onChange={handleInputChange}
-      />
-      <div className="label-container">
-        {!isDropdownVisible && inputValue !== "" && (
-          <span className="label">{initialValue?.skyId || label || ""}</span>
-        )}
+      <div className="flex items-center h-full justify-between border border-[#555] rounded-md">
+        <input
+          type="text"
+          className="styled-input "
+          value={loading ? "Loading..." : inputValue}
+          placeholder={placeholder}
+          disabled={loading}
+          onFocus={() => setDropdownVisible(true)}
+          onChange={handleInputChange}
+          style={{ textOverflow: "ellipsis" }}
+        />
+
+        <div className="px-2">
+          {!isDropdownVisible && inputValue !== "" && (
+            <span className="label">{initialValue?.skyId || label || ""}</span>
+          )}
+        </div>
       </div>
       {isDropdownVisible && (
-        <div className="w-full absolute bg-[#555] max-h-[500px] overflow-scroll rounded-lg">
+        <div className="w-full z-[20] absolute bg-[#555] max-h-[500px] overflow-scroll rounded-lg">
           {Object.keys(groupedData).map((country) => (
             <div key={country} className="dropdown-country">
               {Object.keys(groupedData[country]).map((city) => (
@@ -155,7 +159,7 @@ const InputWithDropdown = ({
             </div>
           ))}
           {!loading && Object.keys(groupedData).length === 0 && (
-            <div className="dropdown-item">No results found</div>
+            <div className="dropdown-item z-[20]">No results found</div>
           )}
         </div>
       )}

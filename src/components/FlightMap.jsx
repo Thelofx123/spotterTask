@@ -8,7 +8,6 @@ import {
 import { countryCoordinates } from "../data/country";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useMobile } from "../hooks/useMobile";
 
 const customIcon = L.icon({
   iconUrl: "https://cdn-icons-png.freepik.com/512/2873/2873022.png",
@@ -34,6 +33,7 @@ const FlightMap = ({ itineraries }) => {
       const airport = leg.destination.name;
 
       const coordinates = countryCoordinates[destination.split(" ").join("")];
+
       if (!coordinates) {
         return null;
       }

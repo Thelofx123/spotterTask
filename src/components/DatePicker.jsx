@@ -8,10 +8,11 @@ const DatePicker = ({
   setEndDate,
   sidebar,
 }) => {
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [isRoundTrip, setIsRoundTrip] = useState(true);
   const [selectedStartDate, setSelectedStartDate] = useState(startDate || null);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate || null);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
+  const [isRoundTrip, setIsRoundTrip] = useState(true);
   const datePickerRef = useRef(null);
 
   useEffect(() => {
@@ -88,34 +89,34 @@ const DatePicker = ({
     }
 
     return (
-      <div className="bg-[#555]">
-        <div className="calendar-header">
+      <div className="bg-[#555] w-full">
+        <div className="calendar-header text-center font-semibold text-lg">
           {currentMonth.toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </div>
-        <div className="calendar-grid">
+        <div className="calendar-grid grid grid-cols-7 gap-2 text-center text-sm">
           {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-            <div key={day} className="w-full h-full text-center text-[#aaa]">
+            <div key={day} className="text-[#aaa]">
               {day}
             </div>
           ))}
           {dates.map((date, index) => (
             <div
               key={index}
-              className={`w-full h-full text-center cursor-pointer rounded-full ${
+              className={`cursor-pointer rounded-full ${
                 date &&
                 (date.toDateString() === selectedStartDate?.toDateString() ||
                   date.toDateString() === selectedEndDate?.toDateString())
-                  ? "bg-[#1a73e8]"
+                  ? "bg-[#1a73e8] text-white"
                   : date &&
                     selectedStartDate &&
                     selectedEndDate &&
                     date > selectedStartDate &&
                     date < selectedEndDate
                   ? "bg-[#394457]"
-                  : ""
+                  : "hover:bg-[#666]"
               }`}
               onClick={() => date && handleDateClick(date)}
             >
@@ -127,13 +128,21 @@ const DatePicker = ({
     );
   };
 
+  const handlePreviousMonth = () => {
+    setCurrentMonthOffset((prev) => prev - 1);
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonthOffset((prev) => prev + 1);
+  };
+
   return (
     <div
-      className="w-full relative  bg-[#3A3B3F] h-full border-[1px] rounded-md border-[#555]"
+      className="relative bg-[#3A3B3F] border-[1px] w-full rounded-md border-[#555]"
       ref={datePickerRef}
     >
       <div
-        className=" flex w-full items-center justify-between p-[10px] rounded-md "
+        className="flex  items-center justify-between p-4 bg-[#202125] rounded-md cursor-pointer"
         onClick={() => setDatePickerVisible(!isDatePickerVisible)}
       >
         <span>
@@ -148,37 +157,56 @@ const DatePicker = ({
       </div>
       {isDatePickerVisible && (
         <div
-          className={`absolute ] top-[44px] bg-[#555] p-[10px] rounded-md ${
-            sidebar ? "left-0 z-10 w-full " : "right-0 w-full lg:w-[650px]"
+          className={`absolute top-[44px] bg-[#555] py-[20px] rounded-md ${
+            sidebar ? "left-0 z-10 w-full" : "right-0 w-full lg:w-[650px]"
           }`}
         >
-          <div className="bg-[#555]">
-            <div className="toggle-trip-type">
+          <div className="bg-[#555] flex flex-col gap-4">
+            <div className="toggle-trip-type flex justify-around">
               <button
-                className={`trip-type-button ${!isRoundTrip ? "active" : ""}`}
+                className={`px-4 py-2 rounded-full ${
+                  !isRoundTrip ? "bg-[#1a73e8] text-white" : "bg-transparent"
+                }`}
                 onClick={() => setIsRoundTrip(false)}
               >
                 One Way
               </button>
               <button
-                className={`trip-type-button ${isRoundTrip ? "active" : ""}`}
+                className={`px-4 py-2 rounded-full ${
+                  isRoundTrip ? "bg-[#1a73e8] text-white" : "bg-transparent"
+                }`}
                 onClick={() => setIsRoundTrip(true)}
               >
                 Round Trip
               </button>
             </div>
-            <div className="w-full p-[10px] flex gap-[20px] bg-[#555] flex-col">
-              {renderCalendar(0)}
-              {renderCalendar(1)}
+            <div className="flex relative items-center justify-between">
+              <button
+                className="text-blue-500 hover:bg-[#444] absolute left-[-10px]  p-2 rounded-full"
+                onClick={handlePreviousMonth}
+              >
+                {"<"}
+              </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full p-4">
+                {renderCalendar(currentMonthOffset)}
+                {renderCalendar(currentMonthOffset + 1)}
+              </div>
+              <button
+                className="text-blue-500 hover:bg-[#444] p-2 rounded-full absolute right-[-10px]"
+                onClick={handleNextMonth}
+              >
+                {">"}
+              </button>
             </div>
-          </div>
-          <div className="w-full border-t-[1px] p-[10px] flex items-center justify-end">
-            <button
-              onClick={() => setDatePickerVisible(false)}
-              className="p-[10px] bg-[#8AB4F8] text-black rounded-3xl text-[14px] px-[20px]"
-            >
-              Done
-            </button>
+            <div className="flex justify-between mt-4 px-4">
+              <button className="text-sm text-gray-400">Reset</button>
+              <button
+                onClick={() => setDatePickerVisible(false)}
+                className="p-2 bg-[#8AB4F8] text-black rounded-full"
+              >
+                Done
+              </button>
+            </div>
           </div>
         </div>
       )}

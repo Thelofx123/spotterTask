@@ -1,17 +1,10 @@
 import "../style/flightStyle.css";
-import React, { useState } from "react";
+import React from "react";
 
-const FlightCard = ({
-  flight,
-  sideBarDetail,
-  setSetBarDetail,
-  setSelectedFlightCard,
-}) => {
+const FlightCard = ({ flight, setSetBarDetail, setSelectedFlightCard }) => {
   const leg = flight?.legs[0];
   const durationHours = Math.floor(leg?.durationInMinutes / 60);
   const durationMinutes = leg?.durationInMinutes % 60;
-
-  // console.log(flight, "flight");
 
   return (
     <div

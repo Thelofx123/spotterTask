@@ -1,19 +1,16 @@
+import { HotelsOnFlightSideBar } from "./HotelsOnFlightSideBar";
+import { FlightSideBarButton } from "./FlightSideBarButton";
+import { formatDate } from "../utility/helper";
+import { WhenToVisit } from "./WhenToVisit";
+import { FlightMini } from "./FlightMini";
+import { Seperator } from "./Seperator";
 import React, { useState } from "react";
 import FlightCard from "./FlightCard";
 import SearchBar from "./SearchBar";
-import { formatDate } from "../utility/helper";
-import { FlightMini } from "./FlightMini";
-import { Seperator } from "./Seperator";
-import useFlight from "../hooks/useFlight";
-import { HotelsOnFlightSideBar } from "./HotelsOnFlightSideBar";
-import { FlightSideBarButton } from "./FlightSideBarButton";
 
 const FlightList = ({ itineraries }) => {
-  const [sideBarDetail, setSetBarDetail] = useState(false);
   const [selectedFlightCard, setSelectedFlightCard] = useState(null);
-  const { flightParams } = useFlight();
-
-  console.log(selectedFlightCard, "selectedFlightCard");
+  const [sideBarDetail, setSetBarDetail] = useState(false);
 
   return (
     <div className=" relative h-screen overflow-scroll scrollbar-hide ">
@@ -23,7 +20,7 @@ const FlightList = ({ itineraries }) => {
       </div>
 
       {sideBarDetail && selectedFlightCard ? (
-        <div className="w-full h-full overflow-scroll absolute top-0 bg-black">
+        <div className="w-full  overflow-scroll absolute top-0 bg-black">
           <div className="w-full h-auto ">
             <div className="w-full relative top-0">
               <img
@@ -55,7 +52,7 @@ const FlightList = ({ itineraries }) => {
               </div>
             </div>
           </div>
-          <div className="w-full h-full bg-[#202125] relative z-[200] rounded-t-2xl mt-[-10px] border-[1px] border-[#5F6368]">
+          <div className="w-full  bg-[#202125] relative z-[200] rounded-t-2xl mt-[-10px] border-[1px] border-[#5F6368]">
             <div className="py-[20px] flex items-center justify-center px-[32px]">
               <p className="text-[24px]">
                 Flight from {selectedFlightCard?.legs[0]?.origin?.city}
@@ -73,6 +70,9 @@ const FlightList = ({ itineraries }) => {
             </div>
             <Seperator />
             <HotelsOnFlightSideBar />
+            <Seperator />
+            <WhenToVisit />
+            <Seperator />
           </div>
         </div>
       ) : (
