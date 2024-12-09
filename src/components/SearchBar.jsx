@@ -9,18 +9,19 @@ import DatePicker from "./DatePicker";
 
 const SearchBar = ({ sidebar = false }) => {
   const { saveFlightData, flightParams } = useFlight();
-  const { isMobile } = useMobile(1024);
   const { nearbyAirports } = useUser();
   const navigate = useNavigate();
 
+  const [travelClass, setTravelClass] = useState("Economy");
+  const [errorMessage, setErrorMessage] = useState("");
   const [tripType, setTripType] = useState("One-way");
+  const { isMobile } = useMobile(1024);
   const [passengers, setPassengers] = useState({
     adults: 1,
     children: 0,
     infantsInSeat: 0,
     infantsOnLap: 0,
   });
-  const [travelClass, setTravelClass] = useState("Economy");
 
   const [originValue, setOriginValue] = useState(null);
   const [destinationValue, setDestinationValue] = useState(null);
@@ -90,7 +91,7 @@ const SearchBar = ({ sidebar = false }) => {
 
   const searchFlights = async () => {
     if (!originValue || !destinationValue) {
-      alert("Please select both origin and destination!");
+      setErrorMessage("Please select both origin and destination!");
       return;
     }
     setIsLoading(true);
@@ -112,11 +113,21 @@ const SearchBar = ({ sidebar = false }) => {
 
     try {
       const data = await fetchData(endpoint, params);
-      saveFlightData(data, params);
-      setIsLoading(false);
-      navigate("/flights");
+      if (data?.status) {
+        saveFlightData(data, params);
+        setIsLoading(false);
+        navigate("/flights");
+      } else {
+        const message =
+          data.message?.[0] || "Something went wrong. Please try again.";
+        setErrorMessage(message.cabinClass || message);
+      }
     } catch (error) {
       setIsLoading(false);
+      const message =
+        error.response?.data?.message?.[0] ||
+        "Something went wrong. Please try again.";
+      setErrorMessage(message.cabinClass || message);
     }
   };
 
@@ -126,6 +137,12 @@ const SearchBar = ({ sidebar = false }) => {
         sidebar ? "w-full" : "lg:w-full 2xl:w-[70%]"
       }  relative  bg-[#202125] pt-[8px] px-[16px] pb-[48px] rounded-lg border-b-[1px] border-[#555] shadow-2xl lg:shadow-xl`}
     >
+      {errorMessage && (
+        <div className="bg-red-600 text-white text-center py-2 rounded-md mb-4">
+          {errorMessage}
+        </div>
+      )}
+
       <div className=" flex items-center gap-[20px] md:gap-[30px] lg:gap-[40px] py-[10px]">
         <div className="relative">
           <button
