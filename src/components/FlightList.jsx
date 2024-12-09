@@ -46,7 +46,7 @@ const FlightList = ({ itineraries, data }) => {
       </div>
 
       {sideBarDetail && selectedFlightCard ? (
-        <div className="w-full  overflow-scroll absolute top-0 bg-black">
+        <div className="w-full  overflow-scroll absolute top-0 bg-black z-[200]">
           <div className="w-full h-auto ">
             <div className="w-full relative top-0">
               <img
