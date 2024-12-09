@@ -1,0 +1,111 @@
+.date-picker-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.date-input {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+.date-input span {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.toggle-trip-type {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.trip-type-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+}
+
+.trip-type-button.active {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+.date-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #444;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 20px;
+  width: 600px;
+  z-index: 10;
+}
+
+.calendar-wrapper {
+  gap: 10px;
+}
+
+.calendar-wrapper-main {
+  display: flex;
+  gap: 10px;
+}
+
+.calendar {
+  flex: 1;
+}
+
+.calendar-header {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar-day-name {
+  text-align: center;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.calendar-day:hover {
+  background-color: #555;
+}
+
+.calendar-day.selected {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+.calendar-day.in-range {
+  background-color: #555;
+  color: #fff;
+}
