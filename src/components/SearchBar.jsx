@@ -117,6 +117,7 @@ const SearchBar = ({ sidebar = false }) => {
       if (data?.status) {
         if (data.data.itineraries.length === 0) {
           setErrorMessage("There are no flights.");
+          setIsLoading(false);
         } else {
           saveFlightData(data, params);
           setIsLoading(false);
