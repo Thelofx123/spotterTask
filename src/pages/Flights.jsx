@@ -11,7 +11,10 @@ const Flights = ({}) => {
   return (
     <div className="w-full  flex">
       <div className="w-full lg:w-[600px] ">
-        <FlightList itineraries={flightsData?.data?.itineraries || []} />
+        <FlightList
+          itineraries={flightsData?.data?.itineraries || []}
+          data={flightsData?.data}
+        />
       </div>
       {!isMobile && (
         <div className="w-full">

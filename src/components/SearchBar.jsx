@@ -16,6 +16,7 @@ const SearchBar = ({ sidebar = false }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [tripType, setTripType] = useState("One-way");
   const { isMobile } = useMobile(1024);
+
   const [passengers, setPassengers] = useState({
     adults: 1,
     children: 0,
@@ -23,13 +24,13 @@ const SearchBar = ({ sidebar = false }) => {
     infantsOnLap: 0,
   });
 
-  const [originValue, setOriginValue] = useState(null);
   const [destinationValue, setDestinationValue] = useState(null);
+  const [originValue, setOriginValue] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [origin, setOrigin] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const [dropDown, setDropDowns] = useState({
     trip: false,
@@ -114,9 +115,13 @@ const SearchBar = ({ sidebar = false }) => {
     try {
       const data = await fetchData(endpoint, params);
       if (data?.status) {
-        saveFlightData(data, params);
-        setIsLoading(false);
-        navigate("/flights");
+        if (data.data.itineraries.length === 0) {
+          setErrorMessage("There are no flights.");
+        } else {
+          saveFlightData(data, params);
+          setIsLoading(false);
+          navigate("/flights");
+        }
       } else {
         const message =
           data.message?.[0] || "Something went wrong. Please try again.";

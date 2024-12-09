@@ -7,15 +7,41 @@ import { Seperator } from "./Seperator";
 import React, { useState } from "react";
 import FlightCard from "./FlightCard";
 import SearchBar from "./SearchBar";
+import FlightFilter from "./FlightFilter";
 
-const FlightList = ({ itineraries }) => {
+const FlightList = ({ itineraries, data }) => {
   const [selectedFlightCard, setSelectedFlightCard] = useState(null);
   const [sideBarDetail, setSetBarDetail] = useState(false);
+  const [filteredFlights, setFilteredFlights] = useState(itineraries);
+  const [isVisibleFilter, setIsVisibleFilter] = useState(false);
 
   return (
     <div className=" relative h-screen overflow-scroll scrollbar-hide ">
       <SearchBar sidebar={true} />
-      <div className="w-full h-[50px] flex items-center justify-end pt-[20px] px-[20px]">
+
+      <div className="w-full relative py-[30px] ">
+        <div className="py-[10px] border-y-[1px] border-[#5F6368] px-[30px] ">
+          <div
+            className="w-fit  rounded-xl hover:bg-[#333438] py-[6px] px-[8px] cursor-pointer"
+            onClick={() => {
+              setIsVisibleFilter(!isVisibleFilter);
+            }}
+          >
+            <p className=" text-[#8ab4f8]">All filters</p>
+          </div>
+        </div>
+        {isVisibleFilter && (
+          <div className="absolute left-[20px] overflow-scroll scrollbar-hide h-[500px] z-[100]">
+            <FlightFilter
+              flights={itineraries}
+              setFilteredFlights={setFilteredFlights}
+              setIsVisibleFilter={setIsVisibleFilter}
+            />
+          </div>
+        )}
+      </div>
+
+      <div className="relative w-full h-[50px] flex items-center justify-end  px-[20px]">
         About these results !
       </div>
 
@@ -76,7 +102,7 @@ const FlightList = ({ itineraries }) => {
           </div>
         </div>
       ) : (
-        itineraries.map((flight) => (
+        filteredFlights.map((flight) => (
           <div className="px-[20px]">
             <FlightCard
               flight={flight}
